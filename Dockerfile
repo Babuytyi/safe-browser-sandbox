@@ -11,8 +11,8 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Tell Railway to use 6080
+# Set Railway port for noVNC
 ENV PORT=6080
-EXPOSE 6080
 
-CMD ["/startup.sh"]
+# Tell noVNC to bind to Railway's $PORT
+CMD websockify --web=/usr/share/novnc/ $PORT localhost:5900 & /startup.sh
